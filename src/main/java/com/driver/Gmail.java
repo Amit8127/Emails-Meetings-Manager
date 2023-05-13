@@ -2,7 +2,6 @@ package com.driver;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Gmail extends Email {
@@ -37,8 +36,8 @@ public class Gmail extends Email {
     public Gmail(String emailId, int inboxCapacity) {
         super(emailId);
         this.inboxCapacity = inboxCapacity;
-        this.Inbox = new LinkedList<>();
-        this.Trash = new LinkedList<>();
+        this.Inbox = new ArrayList<>();
+        this.Trash = new ArrayList<>();
     }
 
     public void receiveMail(Date date, String sender, String message){
@@ -46,7 +45,7 @@ public class Gmail extends Email {
         // It is guaranteed that:
         // 1. Each mail in the inbox is distinct.
         // 2. The mails are received in non-decreasing order. This means that the date of a new mail is greater than equal to the dates of mails received already.
-        if(Inbox.size() >= inboxCapacity) {
+        if(Inbox.size() == inboxCapacity) {
             Trash.add(Inbox.remove(0));
         }
         Inbox.add(new Mail(date, sender, message));
@@ -55,10 +54,10 @@ public class Gmail extends Email {
     public void deleteMail(String message){
         // Each message is distinct
         // If the given message is found in any mail in the inbox, move the mail to trash, else do nothing
-        for(Mail mail : Inbox) {
-            if(mail.getMessage().equals(message)) {
-                Trash.add(mail);
-                Inbox.remove(mail);
+        for(int i = 0; i < Inbox.size(); i++){
+            if(Inbox.get(i).getMessage().equals(message)){
+                Trash.add(Inbox.get(i));
+                this.Inbox.remove(i);
             }
         }
     }
