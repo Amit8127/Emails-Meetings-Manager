@@ -40,7 +40,7 @@ public class Workspace extends Gmail{
         }
         
         for(int i = 1; i < endTime.size(); i++) {
-            if(calendar.get(endTime.get(i).getRight()).getStartTime().compareTo(presentMeetingEndTime) > 0) {
+            if(calendar.get(endTime.get(i).getRight()).getStartTime().isAfter(presentMeetingEndTime)) {
                 meetingsCanAttend++;
                 presentMeetingEndTime = endTime.get(i).getLeft();
             }
